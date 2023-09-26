@@ -6,6 +6,7 @@
 #include <memory>
 #include <random>
 #include <vector>
+#include <omp.h>
 #include "curve.h"
 #include "curve/circle.h"
 #include "curve/ellipse.h"
@@ -27,7 +28,7 @@ int main()
 
   vector<shared_ptr<Curve>> curves;
 
-  for (int i = 0; i < 4; i++)
+  for (int i = 0; i < 6; i++)
   {
     auto ptr1 = make_shared<Circle>(random(3., 8.));
     curves.emplace_back(move(ptr1));
@@ -71,14 +72,13 @@ int main()
     return a->get_radius() < b->get_radius();
   });
 
-  double r_sum = accumulate(circles.begin(), circles.end(), 0., []
-  (
-    double sum,
-    const shared_ptr<Circle> & circle
-  )
+  double r_sum = 0.;
+  omp_set_num_threads(N_THREADS);
+  #pragma omp parallel for
+  for (int i = 0; i < circles.size(); i++)
   {
-    return sum + circle->get_radius();
-  });
+    r_sum += circles[i]->get_radius();
+  }
 
   cout << "\n-- Problem 2 --\n";
 
