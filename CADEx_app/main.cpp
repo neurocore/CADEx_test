@@ -1,18 +1,16 @@
 #include <algorithm>
 #include <iostream>
-#include <iomanip>
 #include <cstdlib>
 #include <numeric>
 #include <memory>
 #include <random>
 #include <vector>
 #include <omp.h>
-#include "curve.h"
-#include "curve/circle.h"
-#include "curve/ellipse.h"
-#include "curve/helix.h"
+#include "curves.h"
 
 using namespace std;
+
+const int N_THREADS = 4;
 
 int main()
 {
@@ -48,7 +46,7 @@ int main()
   for (const auto curve : curves)
   {
     cout << curve->get_pos(t) << " | "
-         << curve->get_dt(t) << "\n";
+      << curve->get_dt(t) << "\n";
   }
 
   // 2. Vector of random circles shared from the first container
@@ -82,11 +80,11 @@ int main()
 
   cout << "\n-- Problem 2 --\n";
 
-  for (auto circle : circles)
+  for (const auto circle : circles)
   {
     cout << circle->get_radius() << "\n";
   }
   cout << "Sum of r = " << r_sum << "\n";
 
-  system("pause");
+  //system("pause");
 }
