@@ -143,7 +143,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="curve.h" />
     <ClInclude Include="curves.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
